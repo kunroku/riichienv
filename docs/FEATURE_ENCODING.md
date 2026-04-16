@@ -362,11 +362,11 @@ The final shanten is the minimum across all three patterns.
 
 ## Implementation
 
-The encoding is implemented in the `riichienv-core/src/observation/` module:
-- Struct definition and serialization: [mod.rs](../riichienv-core/src/observation/mod.rs)
-- Helper functions (buffer operations, dora calculation): [helpers.rs](../riichienv-core/src/observation/helpers.rs)
-- Internal `encode_*_into` methods (flat buffer encoding): [encode.rs](../riichienv-core/src/observation/encode.rs)
-- Python `#[pymethods]` wrappers (`encode()`, `encode_discard_history_decay()`, etc.): [python.rs](../riichienv-core/src/observation/python.rs)
+The encoding is implemented in the `core/src/observation/` module:
+- Struct definition and serialization: [mod.rs](../core/src/observation/mod.rs)
+- Helper functions (buffer operations, dora calculation): [helpers.rs](../core/src/observation/helpers.rs)
+- Internal `encode_*_into` methods (flat buffer encoding): [encode.rs](../core/src/observation/encode.rs)
+- Python `#[pymethods]` wrappers (`encode()`, `encode_discard_history_decay()`, etc.): [python.rs](../core/src/observation/python.rs)
 
-Yaku checking logic: [riichienv-core/src/yaku_checker.rs](../riichienv-core/src/yaku_checker.rs)
-Shanten calculation: [riichienv-core/src/shanten.rs](../riichienv-core/src/shanten.rs)
+Yaku checking logic: [core/src/yaku_checker.rs](../core/src/yaku_checker.rs)
+Shanten calculation: [core/src/shanten.rs](../core/src/shanten.rs)

@@ -37,7 +37,7 @@ A standalone, web-based UI for RiichiEnv featuring 2D/3D replay viewers and a li
 
 1.  Navigate to this directory:
     ```bash
-    cd riichienv-ui
+    cd ui
     ```
 2.  Install dependencies:
     ```bash
@@ -48,7 +48,7 @@ A standalone, web-based UI for RiichiEnv featuring 2D/3D replay viewers and a li
     npm run build
     ```
     This will:
-    - Build `riichienv-wasm` via `wasm-pack` (`npm run build:wasm`).
+    - Build `wasm` via `wasm-pack` (`npm run build:wasm`).
     - Generate `src/tiles.ts` from SVG assets (`npm run build:tiles`).
     - Bundle and minify into `dist/viewer.js` (IIFE) and `dist/viewer.esm.js` (ESM) using `esbuild` with WASM binary inlined.
     - Compress the bundle into `dist/viewer.js.gz`.

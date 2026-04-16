@@ -13,7 +13,7 @@ resolution-markers = [
 [manifest]
 members = [
     "riichienv",
-    "riichienv-ml",
+    "ml",
 ]
 
 [[package]]
@@ -2662,7 +2662,7 @@ dev = [
 [[package]]
 name = "riichienv-ml"
 version = "0.4.7"
-source = { editable = "riichienv-ml" }
+source = { editable = "ml" }
 dependencies = [
     { name = "dotenv" },
     { name = "loguru" },

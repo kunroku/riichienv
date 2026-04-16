@@ -1,0 +1,134 @@
+{
+    "name": "riichienv",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+
+    // ------------------------------------------------------------------
+    // Runtime: GPU access
+    // ------------------------------------------------------------------
+    "runArgs": [
+        "--gpus", "all",
+        "--shm-size=16g"
+    ],
+
+    // ------------------------------------------------------------------
+    // Mounts
+    //   - host /vhdx/data/riichienv  → container /data/riichienv
+    //   - named volumes for Copilot session persistence
+    //   - named volumes for shell history
+    // ------------------------------------------------------------------
+    "mounts": [
+        {
+            "type": "bind",
+            "source": "/vhdx/data/riichienv",
+            "target": "/data/riichienv"
+        },
+        {
+            "type": "volume",
+            "source": "riichienv-copilot",
+            "target": "/root/.copilot"
+        },
+        {
+            "type": "volume",
+            "source": "riichienv-copilot-cache",
+            "target": "/root/.cache/copilot"
+        },
+        {
+            "type": "volume",
+            "source": "riichienv-gh-config",
+            "target": "/root/.config/gh"
+        },
+        {
+            "type": "volume",
+            "source": "riichienv-zsh-history",
+            "target": "/root/.zsh_history_vol"
+        },
+        {
+            "type": "volume",
+            "source": "riichienv-cargo-registry",
+            "target": "/usr/local/cargo/registry"
+        }
+    ],
+
+    // ------------------------------------------------------------------
+    // VS Code settings inside the container
+    // ------------------------------------------------------------------
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "terminal.integrated.profiles.linux": {
+                    "zsh": {
+                        "path": "/bin/zsh"
+                    }
+                },
+                "editor.formatOnSave": true,
+                "rust-analyzer.cargo.buildScripts.enable": true,
+                "rust-analyzer.procMacro.enable": true,
+                "[rust]": {
+                    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+                },
+                "[python]": {
+                    "editor.defaultFormatter": "charliermarsh.ruff"
+                },
+                "[typescript]": {
+                    "editor.defaultFormatter": "biomejs.biome"
+                },
+                "[javascript]": {
+                    "editor.defaultFormatter": "biomejs.biome"
+                },
+                "python.defaultInterpreterPath": "/workspace/.venv/bin/python"
+            },
+            "extensions": [
+                // GitHub
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "GitHub.vscode-pull-request-github",
+
+                // Rust
+                "rust-lang.rust-analyzer",
+                "vadimcn.vscode-lldb",
+                "tamasfe.even-better-toml",
+
+                // Python
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "charliermarsh.ruff",
+                "ms-toolsai.jupyter",
+                "ms-toolsai.jupyter-renderers",
+
+                // TypeScript / JavaScript
+                "biomejs.biome",
+                "dbaeumer.vscode-eslint",
+
+                // Git / SCM
+                "eamodio.gitlens",
+                "mhutchie.git-graph",
+
+                // General
+                "editorconfig.editorconfig",
+                "streetsidesoftware.code-spell-checker",
+                "usernamehw.errorlens",
+                "gruntfuggly.todo-tree",
+                "ms-vscode.live-server"
+            ]
+        }
+    },
+
+    // ------------------------------------------------------------------
+    // Post-create: install deps, activate venv, etc.
+    // ------------------------------------------------------------------
+    "postCreateCommand": "bash .devcontainer/devcontainer-post-create.sh",
+
+    // ------------------------------------------------------------------
+    // Remote user (root; change to a non-root user if preferred)
+    // ------------------------------------------------------------------
+    "remoteUser": "root",
+
+    // ------------------------------------------------------------------
+    // Workspace folder
+    // ------------------------------------------------------------------
+    "workspaceFolder": "/workspace"
+}

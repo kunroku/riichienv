@@ -6,7 +6,7 @@
 **Accelerating Reproducible Mahjong Research**
 
 [![CI](https://github.com/kunroku/riichienv/actions/workflows/ci.yml/badge.svg)](https://github.com/kunroku/riichienv/actions/workflows/ci.yml)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kunroku/riichienv/blob/main/riichienv-ui/demos/replay_demo.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kunroku/riichienv/blob/main/ui/demos/replay_demo.ipynb)
 
 </div>
 
@@ -24,7 +24,74 @@
 <img src="https://raw.githubusercontent.com/kunroku/riichienv/main/docs/assets/visualizer1.png" width="42%"> <img src="https://raw.githubusercontent.com/kunroku/riichienv/main/docs/assets/visualizer2.png" width="38%">
 </div>
 
-## 📦 Installation
+## Dev Container
+
+GPU 付き開発環境を再現できる Dev Container 設定が同梱されています。
+
+### 前提条件
+
+| 要件 | 確認コマンド |
+|---|---|
+| Docker Engine | `docker --version` |
+| NVIDIA Container Toolkit | `nvidia-smi` がコンテナ内で動くこと |
+| VS Code + Dev Containers 拡張 | `ms-vscode-remote.remote-containers` |
+
+### 1. ホスト側ディレクトリの準備
+
+```bash
+# データマウント先を作成（存在しない場合のみ）
+sudo mkdir -p /vhdx/data/riichienv
+```
+
+#### Named volume の事前作成（初回のみ）
+
+```bash
+docker volume create riichienv-copilot
+docker volume create riichienv-copilot-cache
+docker volume create riichienv-gh-config
+docker volume create riichienv-zsh-history
+docker volume create riichienv-cargo-registry
+```
+
+### 2. Dev Container を起動する
+
+VS Code のコマンドパレット（`Ctrl+Shift+P`）から:
+
+```
+Dev Containers: Reopen in Container
+```
+
+または CLI（`devcontainer` CLI が必要）:
+
+```bash
+devcontainer up --workspace-folder .
+```
+
+起動後に `.devcontainer/devcontainer-post-create.sh` が自動実行され、
+以下が整備されます。
+
+- Python `.venv` の作成と依存インストール（`uv pip install -e ".[dev]"`）
+- `pre-commit` フックのインストール
+- nvm + Node.js LTS のインストールと `ui` 依存解決
+- Rust ツールチェーンの同期（`rust-toolchain.toml` に従う）
+- starship プロンプト設定（`~/.config/starship.toml`）
+
+### 3. GPU / CUDA の確認
+
+```bash
+# コンテナ内で確認
+nvidia-smi
+python -c "import torch; print(torch.cuda.is_available())"
+```
+
+> **Copilot セッションの永続化について**
+> `riichienv-copilot` / `riichienv-copilot-cache` の Named volume に
+> GitHub Copilot の設定・キャッシュが保存されるため、コンテナを
+> 再作成しても Copilot セッションは維持されます。
+
+---
+
+## Installation
 
 ```bash
 uv add riichienv
@@ -39,7 +106,7 @@ uv sync --dev
 uv run maturin develop --release
 ```
 
-## 🚀 Usage
+## Usage
 
 ### Gym-style API
 
@@ -295,7 +362,7 @@ viewer.summary()        # list of round info dicts (bakaze, kyoku, honba, oya, s
 viewer.get_results(0)   # list[WinResult] for round 0
 ```
 
-See [demos/README.md](riichienv-ui/demos/README.md) for full API details and notebook examples.
+See [demos/README.md](ui/demos/README.md) for full API details and notebook examples.
 
 ### Event-driven API for Online Inference
 
@@ -365,7 +432,3 @@ if obs is not None:
 For more architectural details and contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md) and [DEVELOPMENT_GUIDE.md](docs/DEVELOPMENT_GUIDE.md).
 
 Check our [Milestones](https://github.com/kunroku/riichienv/milestones) for the future roadmap and development plans.
-
-## 📄 License
-
-No license currently assigned.

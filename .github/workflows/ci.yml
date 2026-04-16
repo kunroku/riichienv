@@ -110,7 +110,7 @@ jobs:
           uv run --python 3.14 python -m riichienv.__init__ && echo OK
 
   ui-test:
-    name: vitest (riichienv-ui)
+    name: vitest (ui)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -122,13 +122,13 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: cd riichienv-ui && npm ci
+        run: cd ui && npm ci
 
       - name: Run tests
-        run: cd riichienv-ui && npm test
+        run: cd ui && npm test
 
   ui-lint:
-    name: biome (riichienv-ui)
+    name: biome (ui)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -140,10 +140,10 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: cd riichienv-ui && npm ci
+        run: cd ui && npm ci
 
       - name: Run biome check
-        run: cd riichienv-ui && npm run lint
+        run: cd ui && npm run lint
 
   wasm-build:
     name: wasm-pack build
@@ -159,7 +159,7 @@ jobs:
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
       - name: Build WASM
-        run: wasm-pack build riichienv-wasm --target web
+        run: wasm-pack build wasm --target web
 
       - name: Install Node.js
         uses: actions/setup-node@v4
@@ -168,6 +168,6 @@ jobs:
 
       - name: Build UI
         run: |
-          cd riichienv-ui
+          cd ui
           npm ci
           npm run build

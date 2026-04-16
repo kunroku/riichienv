@@ -1,6 +1,6 @@
 # Development Guide
 
-This document describes how to build and develop the RiichiEnv UI (`riichienv-ui`).
+This document describes how to build and develop the RiichiEnv UI (`ui`).
 
 ## Prerequisites
 
@@ -14,7 +14,7 @@ This document describes how to build and develop the RiichiEnv UI (`riichienv-ui
 
 1. **Install Dependencies**
    ```bash
-   cd riichienv-ui
+   cd ui
    npm install
    ```
 
@@ -24,9 +24,9 @@ This document describes how to build and develop the RiichiEnv UI (`riichienv-ui
    - Download the font from [Google Fonts: Zen Antique Soft](https://fonts.google.com/specimen/Zen+Antique+Soft).
    - Unzip the downloaded file.
    - Rename the font file (e.g., `ZenAntiqueSoft-Regular.ttf`) if necessary to match the expected filename, or verify the filename.
-   - Place the `.ttf` file in the `riichienv-ui/assets/` directory:
+   - Place the `.ttf` file in the `ui/assets/` directory:
      ```
-     riichienv-ui/assets/ZenAntiqueSoft-Regular.ttf
+     ui/assets/ZenAntiqueSoft-Regular.ttf
      ```
 
 ## Asset Generation
@@ -48,7 +48,7 @@ npm run build
 ```
 
 This command will:
-1. Build `riichienv-wasm` via `wasm-pack` (`npm run build:wasm`).
+1. Build `wasm` via `wasm-pack` (`npm run build:wasm`).
 2. Generate tile assets (`scripts/gen_tiles.js`).
 3. Bundle and minify the code using `esbuild` into two formats:
    - `dist/viewer.js` (IIFE) — for `<script>` tag usage, registers globals on `window`.
@@ -82,7 +82,7 @@ npm run watch
 ```
 
 > [!NOTE]
-> `npm run dev` and `npm run watch` do not rebuild WASM. If you modify `riichienv-wasm` or `riichienv-core`, run `npm run build:wasm` first, then restart the dev server.
+> `npm run dev` and `npm run watch` do not rebuild WASM. If you modify `wasm` or `core`, run `npm run build:wasm` first, then restart the dev server.
 
 ## Linting and Formatting
 

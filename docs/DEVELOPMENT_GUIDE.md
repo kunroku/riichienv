@@ -177,7 +177,7 @@ impl Foo {
 ### Build
 
 ```bash
-wasm-pack build riichienv-wasm --target web
+wasm-pack build wasm --target web
 ```
 
 ### Notes
@@ -196,7 +196,7 @@ wasm-pack build riichienv-wasm --target web
 ### Build (full: WASM + UI)
 
 ```bash
-cd riichienv-ui
+cd ui
 npm install
 npm run build
 ```
@@ -206,14 +206,14 @@ This runs the full build pipeline: `build:wasm` → `build:tiles` → `build:bun
 ### Build (UI only, skip WASM rebuild)
 
 ```bash
-cd riichienv-ui
+cd ui
 npm run build:no-wasm
 ```
 
 ### Development
 
 ```bash
-cd riichienv-ui
+cd ui
 npm run dev    # Local dev server with hot-reload
 npm run watch  # File watcher with auto-rebuild
 ```
@@ -221,7 +221,7 @@ npm run watch  # File watcher with auto-rebuild
 ### Build Chain
 
 ```
-riichienv-core → riichienv-wasm (wasm-pack) → riichienv-ui (esbuild) → src/riichienv/visualizer/assets/viewer.js.gz
+core → wasm (wasm-pack) → ui (esbuild) → src/riichienv/visualizer/assets/viewer.js.gz
 ```
 
 The esbuild step inlines the WASM binary into the JavaScript bundle (`--loader:.wasm=binary`), producing a single self-contained `viewer.js` file. This is then gzip-compressed and copied to the Python package assets directory.
@@ -263,7 +263,7 @@ The `riichienv-core` crate includes [Criterion](https://bheisler.github.io/crite
 ### Running Benchmarks
 
 ```bash
-cd riichienv-core
+cd core
 cargo bench --bench agari_bench
 ```
 
@@ -299,13 +299,13 @@ cargo bench --bench agari_bench -- --baseline main
 Integration tests verify that all benchmark fixture data produces the expected han, fu, yaku, and score values:
 
 ```bash
-cd riichienv-core
+cd core
 cargo test --test agari_correctness
 ```
 
 ### Fixture Data
 
-Benchmark cases are stored in `riichienv-core/benches/data/`:
+Benchmark cases are stored in `core/benches/data/`:
 
 | File | Contents |
 |---|---|
@@ -359,10 +359,10 @@ This project uses an automated GitHub Actions workflow for releases.
 ### 3. Creating a Release
 To publish a new version:
 
-1. Update the version number in `riichienv-core/Cargo.toml`, `riichienv-python/Cargo.toml`, `riichienv-wasm/Cargo.toml`, and `pyproject.toml`.
+1. Update the version number in `core/Cargo.toml`, `python/Cargo.toml`, `wasm/Cargo.toml`, and `pyproject.toml`.
 2. Commit and push the changes:
    ```bash
-   git add riichienv-core/Cargo.toml riichienv-python/Cargo.toml riichienv-wasm/Cargo.toml pyproject.toml
+   git add core/Cargo.toml python/Cargo.toml wasm/Cargo.toml pyproject.toml
    git commit -m "chore: bump version to X.Y.Z"
    git push
    ```

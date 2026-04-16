@@ -1,6 +1,6 @@
 # Sequence Feature Encoding (Transformer)
 
-This document describes the sequence feature encoding for transformer models, implemented in `riichienv-core/src/observation/sequence_features.rs` with a Python wrapper at `riichienv-ml/src/riichienv_ml/features/sequence_features.py`.
+This document describes the sequence feature encoding for transformer models, implemented in `core/src/observation/sequence_features.rs` with a Python wrapper at `ml/src/riichienv_ml/features/sequence_features.py`.
 
 The encoding design is based on [Kanachan v3](https://github.com/Cryolite/kanachan/wiki/%5Bv3%5DNotes-on-Training-Data) as a subset — `Room` (5 values) and `Grade` (4x16=64 values) are removed since they are online-platform-dependent and unavailable via MJAI protocol.
 
@@ -304,6 +304,6 @@ SequenceFeatureEncoder.CAND_DIMS           # (280, 3, 3, 4)
 
 | File | Package | Description |
 |------|---------|-------------|
-| `riichienv-core/src/observation/sequence_features.rs` | riichienv-core | Rust encoding logic (~470 lines) |
-| `riichienv-core/src/observation/python.rs` | riichienv-core | PyO3 bindings (4 methods) |
-| `riichienv-ml/src/riichienv_ml/features/sequence_features.py` | riichienv-ml | Python wrapper (~115 lines) |
+| `core/src/observation/sequence_features.rs` | riichienv-core | Rust encoding logic (~470 lines) |
+| `core/src/observation/python.rs` | riichienv-core | PyO3 bindings (4 methods) |
+| `ml/src/riichienv_ml/features/sequence_features.py` | riichienv-ml | Python wrapper (~115 lines) |

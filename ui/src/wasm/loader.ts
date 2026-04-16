@@ -1,7 +1,7 @@
 /**
  * Async WASM module loader.
  *
- * Handles initialization of the riichienv-wasm module.
+ * Handles initialization of the wasm module.
  * The WASM binary is inlined by esbuild's binary loader at build time,
  * so no separate .wasm file fetch is needed at runtime.
  */
