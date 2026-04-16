@@ -71,7 +71,8 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
         sh -s -- -y \
             --no-modify-path \
             --default-toolchain ${RUST_VERSION} \
-            --component rustfmt clippy \
+            --component rustfmt \
+            --component clippy \
             --target wasm32-unknown-unknown \
     && chmod -R a+w ${RUSTUP_HOME} ${CARGO_HOME}
 
@@ -81,10 +82,11 @@ RUN curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 # --------------------------------------------------------------------------- #
 # Node.js (via NodeSource) + npm tools
 # --------------------------------------------------------------------------- #
+ARG BIOME_VERSION=2.4.6
 RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
     && apt-get install -y --no-install-recommends nodejs \
     && rm -rf /var/lib/apt/lists/* \
-    && npm install -g npm@latest
+    && npm install -g @biomejs/biome@${BIOME_VERSION}
 
 # nvm is installed per-user in post-create; system Node is just a fallback.
 

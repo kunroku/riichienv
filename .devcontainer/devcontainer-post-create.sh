@@ -69,8 +69,8 @@ source .venv/bin/activate
 
 # Install project + dev dependencies via uv
 echo "==> [post-create] Installing Python dependencies..."
-uv pip install -e ".[dev]" --extra-index-url https://download.pytorch.org/whl/cu124 || \
-    uv pip install -e ".[dev]"
+uv sync --group dev --index https://download.pytorch.org/whl/cu124 || \
+    uv sync --group dev
 
 # Install ml dependencies if the sub-package exists
 if [[ -f ml/pyproject.toml ]]; then
