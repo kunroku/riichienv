@@ -6,6 +6,12 @@
     },
 
     // ------------------------------------------------------------------
+    // Workspace mount
+    // ------------------------------------------------------------------
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/workspace",
+
+    // ------------------------------------------------------------------
     // Runtime: GPU access
     // ------------------------------------------------------------------
     "runArgs": [
@@ -86,6 +92,7 @@
                 "GitHub.copilot",
                 "GitHub.copilot-chat",
                 "GitHub.vscode-pull-request-github",
+                "github.vscode-github-actions",
 
                 // Rust
                 "rust-lang.rust-analyzer",
@@ -98,6 +105,7 @@
                 "charliermarsh.ruff",
                 "ms-toolsai.jupyter",
                 "ms-toolsai.jupyter-renderers",
+                "astral-sh.ty",
 
                 // TypeScript / JavaScript
                 "biomejs.biome",
@@ -109,7 +117,7 @@
 
                 // General
                 "editorconfig.editorconfig",
-                "streetsidesoftware.code-spell-checker",
+                // "streetsidesoftware.code-spell-checker",
                 "usernamehw.errorlens",
                 "gruntfuggly.todo-tree",
                 "ms-vscode.live-server"
@@ -120,15 +128,10 @@
     // ------------------------------------------------------------------
     // Post-create: install deps, activate venv, etc.
     // ------------------------------------------------------------------
-    "postCreateCommand": "bash .devcontainer/devcontainer-post-create.sh",
+    "postCreateCommand": "bash /workspace/.devcontainer/devcontainer-post-create.sh",
 
     // ------------------------------------------------------------------
     // Remote user (root; change to a non-root user if preferred)
     // ------------------------------------------------------------------
-    "remoteUser": "root",
-
-    // ------------------------------------------------------------------
-    // Workspace folder
-    // ------------------------------------------------------------------
-    "workspaceFolder": "/workspace"
+    "remoteUser": "root"
 }

@@ -13,7 +13,7 @@ resolution-markers = [
 [manifest]
 members = [
     "riichienv",
-    "ml",
+    "riichienv-ml",
 ]
 
 [[package]]
