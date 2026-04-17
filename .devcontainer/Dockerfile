@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         jq \
         less \
         libssl-dev \
+        locales \
         lsb-release \
         pkg-config \
         sudo \
@@ -25,6 +26,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         wget \
         zsh \
     && rm -rf /var/lib/apt/lists/*
+
+# --------------------------------------------------------------------------- #
+# Locale (UTF-8 / Japanese support)
+# --------------------------------------------------------------------------- #
+RUN sed -i 's/# en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen \
+    && sed -i 's/# ja_JP.UTF-8/ja_JP.UTF-8/' /etc/locale.gen \
+    && locale-gen \
+    && update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 # --------------------------------------------------------------------------- #
 # GitHub CLI
